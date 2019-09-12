@@ -64,7 +64,10 @@ def edit(request, list_id):
 		return render(request,'edit.html', {'items': item})
 @login_required
 def email(request):
-	tasks=List.objects.all().values_list('item',flat=True)
+	'''
+	Send an email displaying the uncompleted tasks. 
+	'''
+	tasks=List.objects.all().values_list('item',flat=True).filter(completed=False)
 	tasks= "\n".join(tasks)
 	subject = 'Your Tasks Today'
 	message = ' It is good for you to complete these tasks\n '+ tasks
